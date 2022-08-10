@@ -18,7 +18,7 @@ MODEL:
   BACKBONE:
     ARCH: "resnet34"  
     HEAD: "A"
-  PRETRAIN: "/home/qbl/ccta/torchseg_ctn/tasks/configs/model_best_Dice.pth.tar"  
+  PRETRAIN: "/home/qbl/ccta/ctn-main/tasks/configs/model_best_Dice.pth.tar"  
 
 #SOLVER
 SOLVER:
