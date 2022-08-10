@@ -8,7 +8,7 @@ We mainly use main_c.py (under the project) to train/val/test our models.
 The following is one example:
 ```
 python main_c.py --gpu 0 --train --config ./tasks/configs/ccta_vessel.yaml
-
+```
 The main parameters are following:
 * --train: used to train the model.
 * --test: used to test(val) the model.
