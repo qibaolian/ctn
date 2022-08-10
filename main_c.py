@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--train', default=True, action='store_true', help='command for train')
 parser.add_argument('--test', default=False, action='store_true', help='command for test')
-parser.add_argument('--config', default='/home/qbl/ccta/torchseg_ctn/tasks/configs/ccta_vessel.yaml', help='configure file path')
+parser.add_argument('--config', default='/home/qbl/ccta/ctn-main/tasks/configs/ccta_vessel.yaml', help='configure file path')
 parser.add_argument('--resume', help='resume from latest checkpoint pth') #default=True,
 parser.add_argument('--gpu', nargs='+', type=int, default=[5], help='which gpu to select')
 parser.add_argument('--check_point', default=None, help='the check point path to store')
