@@ -6,7 +6,7 @@ The coronary microvascular disease poses a great threat to human health. Compute
 We mainly use main_c.py (under the project) to train/val/test our models.
 
 The following is one example:
-
+```
 python main_c.py --gpu 0 --train --config ./tasks/configs/ccta_vessel.yaml
 
 The main parameters are following:
