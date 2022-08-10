@@ -3,4 +3,18 @@ The coronary microvascular disease poses a great threat to human health. Compute
 
 ## Usage
 
-We mainly use main_c.py (under the project) to train/test our models.
+We mainly use main_c.py (under the project) to train/val/test our models.
+
+The following is one example:
+
+python main_c.py --gpu 0 --train --config ./tasks/configs/ccta_vessel.yaml
+
+The main parameters are following:
+* --train: used to train the model.
+* --test: used to test(val) the model.
+* --config: the path to the configuration file(*.yaml).
+* --resume(optional): the path to the checkpoint pth(resume the model).
+* --gpu(default 0): decide to which gpu to select. Format: one or multiple integers(separated by space keys), such as 
+: --gpu 0 1 2
+* --check_point(optional): the path to save the trained model, we usually specify the parameter in the config file, if 
+you specify this parameter here, it will override this parameter in the config file. 
