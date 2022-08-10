@@ -1,0 +1,91 @@
+#TASK
+TASK:
+  TYPE: 1
+  NAME: "ccta_vessel"
+
+SEED: 1234
+#METRICS: ['ALL', 'Dice', 'VDice', 'ASSD', 'CLCR', 'ASCLCR', 'VDCLCR', 'HL1','HDice']
+METRICS: ['Dice', 'VDice', 'ASSD', 'CLCR']
+#MODEL
+MODEL:
+  NAME: "da_seresnet18"  
+  PARA:
+      NUM_CLASSES: 3
+  DIM: "3d"
+  BN: "bn"
+  K: 24
+  INPUT_CHANNEL: 1
+  BACKBONE:
+    ARCH: "resnet34"  
+    HEAD: "A"
+  PRETRAIN: "/home/qbl/ccta/torchseg_ctn/tasks/configs/model_best_Dice.pth.tar"  
+
+#SOLVER
+SOLVER:
+  BASE_LR: 0.0001  
+  OPTIMIZER:
+       TYPE: "adamW"
+       BETAS: (0.9, 0.99)
+       WEIGHT_DECAY: 0.0001
+  LR_MODE: "poly"
+  Factor: 0.5
+  PATIENCE: 10
+  WARM_UP: True 
+  #STEP_SIZE: 40
+  LR_STEPS: [50, 70, 90, 120]
+  EPOCHS: 400
+
+#LOSS
+LOSS:
+  TYPE: "lovasz_loss+ce_loss" 
+  WEIGHT: [1.0, 1.0] 
+  CLASS_WEIGHT: [1.0, 4.0, 10.0] 
+  DICE_WEIGHT: [1.0, 2.0, 2.5]
+  IGNORE_INDEX: 255
+
+#TRAIN
+TRAIN:
+  RESUME: False
+  PRINT: 100
+  START_VALIDATE: 10
+  VALIDATE_FREQUENCE: 1
+  DATA:
+    WORKERS: 1
+    TRAIN_LIST:  "/data1/qbl/ccta_add/train_subjects_80_new.lst"  
+    VAL_LIST: "/data1/qbl/ccta_add/validate_20_new.lst"     
+    BATCH_SIZE: 1 #64
+    SAMPLE_NUM_SUBJECTS: 1500
+    SAMPLE_PER_SUBJECT: 1
+    PATCH_SIZE: (256, 256, 256) 
+    WL_WW: (400, 1200)
+    AXIS: 'z'
+    NII_FOLDER:  '/data1/qbl/ccta_add/image' 
+    BLOOD_FOLDER: '/data1/qbl/ccta_add/vessel_largest' 
+    SKELETON_FOLDER: '/data1/qbl/ccta_add/vessel_largest_2class' 
+
+    USE_SDM: True 
+    USE_ROTATION: True 
+    USE_SKELETON: False  #CLASS_WEIGHT     
+    USE_HEATMAP: False
+    TRAIN_NUM_USE: -1
+    VAL_NUM_USE: -1
+
+#TEST
+TEST:
+  SAVE: True
+  SAVE_DIR: 'swin_unet9189'
+  MODEL_PTH: 'model_best_Dice.pth.tar'
+  DATA:
+    WORKERS: 1
+    TEST_FILE: "/data1/qbl/ccta_add/validate_20_new.lst" 
+    #TEST_LIST: ['1003644787', '1003923085', '1004453178', '1005923632', '1004637990', '1005833096'] 
+    PATCH_SIZE:  (256, 256, 256) 
+    AXIS: 'z'
+    BATCH_SIZE: 1
+    NII_FOLDER: '/data1/qbl/ccta_add/image' 
+    BLOOD_FOLDER: '/data1/qbl/ccta_add/vessel_largest' 
+    TEST_NUM_USE: -1
+
+#OUTPUT_DIR: "da_seresnet18c24_mix_loss_20200301"
+OUTPUT_DIR: "test/"
+SAVE_ALL: False
